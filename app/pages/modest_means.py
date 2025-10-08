@@ -14,7 +14,9 @@ def tier_card(
             class_name="absolute -top-5 -left-5 bg-white p-3 rounded-full border",
             border_color=border_color,
         ),
-        rx.el.h3(f"Tier {tier}", class_name="font-['DM Sans'] text-2xl font-bold mb-3"),
+        rx.el.h3(
+            f"Level {tier}", class_name="font-['DM Sans'] text-2xl font-bold mb-3"
+        ),
         rx.el.p(income_range, class_name="font-semibold text-base mb-4 text-gray-800"),
         rx.el.ul(
             rx.foreach(
@@ -63,7 +65,7 @@ def modest_means() -> rx.Component:
                             class_name="mb-4 text-justify",
                         ),
                         rx.el.p(
-                            "By leveraging the power of AI-driven tools and streamlined processes, we can offer high-quality legal services at significantly reduced rates. Our goal is to ensure that everyone, regardless of income, has access to capable legal representation.",
+                            "By using the latest technology and streamlined processes, we can offer high-quality legal services at significantly reduced rates. Our goal is to ensure that everyone, regardless of income, has access to capable legal representation.",
                             class_name="text-justify",
                         ),
                     ),
@@ -77,7 +79,7 @@ def modest_means() -> rx.Component:
             rx.el.div(
                 rx.el.h2(
                     "Tiered Fee Structure",
-                    class_name="font-['DM Sans'] text-3xl font-bold text-center mt-20 mb-12",
+                    class_name="font-['DM Sans'] text-3xl font-bold text-center mt-12 mb-12",
                 ),
                 rx.el.div(
                     tier_card(
@@ -106,7 +108,7 @@ def modest_means() -> rx.Component:
                         [
                             "Standard competitive rates.",
                             "Supports our community mission.",
-                            "Fees help subsidize Tiers 1 & 2.",
+                            "Fees help subsidize Levels 1 & 2.",
                         ],
                         "landmark",
                     ),
