@@ -40,7 +40,7 @@ def modest_means() -> rx.Component:
                 class_name="font-['DM Sans'] text-4xl md:text-5xl font-bold text-center mb-4",
             ),
             rx.el.p(
-                "Leveraging AI to provide affordable, high-quality legal services for our community.",
+                "Leveraging the latest technology to provide affordable, high-quality legal services for our community.",
                 class_name="text-lg text-gray-600 text-center mb-16 max-w-3xl mx-auto",
             ),
             rx.el.div(
@@ -50,7 +50,7 @@ def modest_means() -> rx.Component:
                         class_name="font-['DM Sans'] text-3xl font-bold mb-4",
                     ),
                     rx.el.p(
-                        "The Law Office of Alexander S. Chang is committed to bridging the justice gap. Many individuals and families earn too much to qualify for free legal aid from non-profits, yet cannot afford traditional legal fees. Our Modest Means Program, developed in collaboration with the Utah State Bar’s Access to Justice section, is designed specifically for this group.",
+                        "The Law Office of Alexander S. Chang is committed to bridging the access to justice gap. The vast majority of individuals and families earn too much to qualify for free legal aid from non-profits, but not enough to afford traditional legal fees. The Law Office of Alexander S. Chang is a proud participant of the [Utah State Bar’s Modest Means Program](https://www.utahbar.org/accesstojustice/modest-means/), which is designed specifically to serve this group.",
                         class_name="mb-4",
                     ),
                     rx.el.p(

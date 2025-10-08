@@ -106,7 +106,7 @@ def profile() -> rx.Component:
                     border_color=border_color,
                 ),
                 blockquote(
-                    "Our mission is to demystify the legal process, empowering clients with clear guidance and direct attention to make informed decisions for their future."
+                    "My mission is to demystify the legal process, to empower clients to make informed decisions about their future."
                 ),
                 rx.el.div(
                     rx.el.div(
