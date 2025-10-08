@@ -49,21 +49,23 @@ def modest_means() -> rx.Component:
                         "Commitment to Access to Justice",
                         class_name="font-['DM Sans'] text-3xl font-bold mb-4",
                     ),
-                    rx.el.p(
-                        "The Law Office of Alexander S. Chang is committed to bridging the access to justice gap. The vast majority of individuals and families earn too much to qualify for free legal aid from non-profits, but not enough to afford traditional legal fees. The Law Office of Alexander S. Chang is a proud participant of the ",
-                        rx.el.a(
-                            "Utah State Bar’s Modest Means Program",
-                            href="https://www.utahbar.org/accesstojustice/modest-means/",
-                            class_name=f"text-[{accent_color}] hover:underline font-semibold",
-                            target="_blank",
-                            rel="noopener noreferrer",
+                    rx.el.div(
+                        rx.el.p(
+                            "The Law Office of Alexander S. Chang is committed to bridging the access to justice gap. The vast majority of individuals and families earn too much to qualify for free legal aid from non-profits, but not enough to afford traditional legal fees. The Law Office of Alexander S. Chang is a proud participant of the ",
+                            rx.el.a(
+                                "Utah State Bar’s Modest Means Program",
+                                href="https://www.utahbar.org/accesstojustice/modest-means/",
+                                class_name=f"text-[{accent_color}] hover:underline font-semibold",
+                                target="_blank",
+                                rel="noopener noreferrer",
+                            ),
+                            ", which is designed specifically to serve this group.",
+                            class_name="mb-4 text-justify",
                         ),
-                        ", which is designed specifically to serve this group.",
-                        class_name="mb-4",
-                    ),
-                    rx.el.p(
-                        "By leveraging the power of AI-driven tools and streamlined processes, we can offer high-quality legal services at significantly reduced rates. Our goal is to ensure that everyone, regardless of income, has access to capable legal representation.",
-                        class_name="",
+                        rx.el.p(
+                            "By leveraging the power of AI-driven tools and streamlined processes, we can offer high-quality legal services at significantly reduced rates. Our goal is to ensure that everyone, regardless of income, has access to capable legal representation.",
+                            class_name="text-justify",
+                        ),
                     ),
                 ),
                 rx.el.div(
