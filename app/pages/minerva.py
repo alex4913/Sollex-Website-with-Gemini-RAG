@@ -1,0 +1,88 @@
+import reflex as rx
+from app.components.layout import layout
+from app.components.chat import chat_interface
+from app.states.chat_state import ChatState
+
+accent_color = "#F0C44D"
+text_color = "#1A1A1A"
+border_color = "#E0E0E0"
+
+
+def tos_section(heading: str, *children) -> rx.Component:
+    return rx.el.div(
+        rx.el.h3(heading, class_name="font-semibold text-sm uppercase tracking-wide"),
+        rx.el.div(*children, class_name="text-sm text-gray-600 space-y-2 mt-2"),
+        class_name="mb-4",
+    )
+
+
+def terms_of_service() -> rx.Component:
+    """A component to display the terms of service and get user agreement."""
+    return rx.el.div(
+        rx.el.div(
+            rx.el.h2(
+                "Terms of Service",
+                class_name="font-['DM Sans'] text-2xl font-bold text-center",
+            ),
+            rx.el.p(
+                "Last Updated: 12/31/2025",
+                class_name="text-center text-xs text-gray-500 mb-6",
+            ),
+            rx.el.div(
+                tos_section(
+                    "General Information",
+                    rx.el.p(
+                        "This website and its synthetic intelligence assistant, the Machine Intelligence Network-Enhanced Research Validation Assistant ('Minerva'), are operated by Sollex Legal, L3C ('Company'). Minerva is designed to provide basic legal information regarding Utah laws."
+                    ),
+                    rx.el.p(
+                        rx.el.strong(
+                            "MINERVA IS NOT A LAWYER.", class_name="text-red-600"
+                        ),
+                        " The information provided is for informational purposes only, does not constitute legal advice, and should not be relied upon as such. ",
+                        rx.el.strong(
+                            "No attorney-client relationship is formed by using this service."
+                        ),
+                        " The Company does not guarantee the accuracy, completeness, or usefulness of any information provided by Minerva.",
+                    ),
+                ),
+                tos_section(
+                    "User Agreement",
+                    rx.el.p(
+                        "By accessing or using Minerva, you agree to be bound by these Terms of Service ('Terms'). You represent that you are at least 18 years of age and a resident of the State of Utah. These Terms may be modified at any time."
+                    ),
+                ),
+                tos_section(
+                    "Lawful Purpose & Intellectual Property",
+                    rx.el.p(
+                        "You agree to use Minerva only for lawful purposes. Prohibited behavior includes harassment, transmitting offensive content, or disrupting dialogue. Minerva and its underlying technology are the exclusive intellectual property of the Company. You agree not to decompile, disassemble, or reverse engineer any part of Minerva."
+                    ),
+                ),
+                tos_section(
+                    "Disclaimers, Warranties & Privacy",
+                    rx.el.p(
+                        "Minerva's responses are provided 'as is'. The Company gives no warranty of any kind and shall not be responsible for any damages resulting from your use of Minerva. Information you provide, including your IP address and personal details, may be collected and disclosed if legally required. While we implement security measures, we cannot guarantee absolute security of your information."
+                    ),
+                ),
+                class_name="p-4 bg-gray-50 rounded-md border text-justify max-h-96 overflow-y-auto",
+                border_color=border_color,
+            ),
+            rx.el.button(
+                "I have read and agree to the Terms of Service",
+                on_click=ChatState.accept_tos,
+                class_name=f"w-full bg-[{accent_color}] text-[{text_color}] font-bold py-3 mt-6 hover:opacity-90 transition-opacity",
+            ),
+            class_name="w-full max-w-2xl mx-auto p-8 bg-white/50 backdrop-blur-sm border rounded-lg",
+            border_color=border_color,
+        )
+    )
+
+
+def minerva() -> rx.Component:
+    """The page for the Minerva chatbot."""
+    return layout(
+        rx.el.div(
+            rx.cond(ChatState.tos_accepted, chat_interface(), terms_of_service()),
+            class_name="flex flex-col items-center justify-center w-full",
+            on_mount=ChatState.minerva_page_load,
+        )
+    )

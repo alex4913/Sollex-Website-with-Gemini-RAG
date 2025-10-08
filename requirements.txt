@@ -1,0 +1,7 @@
+
+reflex==0.8.13a1
+langchain
+langchain-google-genai
+langchain-community
+google-generativeai
+numpy
