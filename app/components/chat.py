@@ -33,7 +33,7 @@ def chat_interface() -> rx.Component:
     """The main chat interface component."""
     return rx.el.div(
         rx.el.h3(
-            "Minerva: Utah's Open Source Intelligence",
+            "Utah Caselaw Access Project",
             class_name="font-['DM Sans'] text-xl font-bold text-center mb-2 pt-6",
         ),
         rx.el.p(

@@ -22,7 +22,7 @@ class ChatState(rx.State):
 
     messages: list[Message] = [
         {
-            "text": "The information provided by Minerva is for general legal information only and does not constitute legal advice. No attorney-client relationship is created by using this service.",
+            "text": "The information provided by UCAP is for general legal information only and does not constitute legal advice. Do not submit or send any confidential or personal information. No attorney-client relationship is created by using UCAP.",
             "is_user": False,
         },
         {
