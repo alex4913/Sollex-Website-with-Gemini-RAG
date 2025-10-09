@@ -32,7 +32,6 @@ class ChatState(rx.State):
     ]
     is_typing: bool = False
     tos_accepted: bool = False
-    scrolled_to_bottom: bool = False
     prompts: list[str] = [
         "Can a landlord evict a tenant without a court order?",
         "What is the economic loss doctrine in Utah contract law?",
@@ -76,30 +75,6 @@ class ChatState(rx.State):
     def accept_tos(self):
         """Sets the terms of service as accepted."""
         self.tos_accepted = True
-
-    @rx.event
-    def set_scrolled_to_bottom(self, scrolled: bool):
-        """Sets that the user has scrolled to the bottom of the TOS."""
-        if scrolled:
-            self.scrolled_to_bottom = True
-
-    @rx.event
-    def handle_tos_scroll(self):
-        """Checks if the user has scrolled to the bottom of the TOS."""
-        return rx.call_script("""
-            const el = document.getElementById('tos-scroll-area');
-            if (el) {
-                const isAtBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 20;
-                if (isAtBottom) {
-                    // Directly call the event handler to set the state.
-                    // This is a more direct way to trigger the state update.
-                    reflex.call_event_handler(
-                        ChatState.set_scrolled_to_bottom, 
-                        {payload: true}
-                    );
-                }
-            }
-            """)
 
     async def _create_embeddings(self):
         """Helper to pre-compute embeddings for the legal documents."""
