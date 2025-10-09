@@ -46,6 +46,19 @@ def terms_of_service() -> rx.Component:
                     ),
                 ),
                 tos_section(
+                    "Confidentiality and User Input",
+                    rx.el.p(
+                        rx.el.strong(
+                            "DO NOT INPUT PERSONAL OR CONFIDENTIAL INFORMATION.",
+                            class_name="text-red-600 font-bold",
+                        ),
+                        " UCAP is a tool to provide general information about the law. It is NOT a secure communication channel and cannot provide legal advice for your specific situation. You should not enter any facts about your case, personal identifiers, or any other sensitive information.",
+                    ),
+                    rx.el.p(
+                        "The purpose of this tool is to understand what the law IS, not how it applies to YOUR specific fact pattern."
+                    ),
+                ),
+                tos_section(
                     "User Agreement",
                     rx.el.p(
                         "By accessing or using UCAP, you agree to be bound by these Terms of Service ('Terms'). You represent that you are at least 18 years of age and a resident of the State of Utah. These Terms may be modified at any time."
@@ -63,13 +76,16 @@ def terms_of_service() -> rx.Component:
                         "UCAP's responses are provided 'as is'. The Company gives no warranty of any kind and shall not be responsible for any damages resulting from your use of UCAP. Information you provide, including your IP address and personal details, may be collected and disclosed if legally required. While we implement security measures, we cannot guarantee absolute security of your information."
                     ),
                 ),
+                id="tos-scroll-area",
+                on_scroll=ChatState.handle_tos_scroll,
                 class_name="p-4 bg-gray-50 rounded-md border text-justify max-h-96 overflow-y-auto",
                 border_color=border_color,
             ),
             rx.el.button(
                 "I have read and agree to the Terms of Service",
                 on_click=ChatState.accept_tos,
-                class_name=f"w-full bg-[{accent_color}] text-[{text_color}] font-bold py-3 mt-6 hover:opacity-90 transition-opacity",
+                disabled=~ChatState.scrolled_to_bottom,
+                class_name=f"w-full bg-[{accent_color}] text-[{text_color}] font-bold py-3 mt-6 hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed",
             ),
             class_name="w-full max-w-2xl mx-auto p-8 bg-white/50 backdrop-blur-sm border rounded-lg",
             border_color=border_color,
