@@ -7,7 +7,8 @@ def disclaimer() -> rx.Component:
     return layout(
         rx.el.div(
             rx.el.h1(
-                "Disclaimer", class_name="font-['DM Sans'] text-4xl font-bold mb-6"
+                "Legal Disclaimer",
+                class_name="font-['DM Sans'] text-4xl font-bold mb-6",
             ),
             rx.el.div(
                 rx.el.p(

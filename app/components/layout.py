@@ -71,8 +71,7 @@ def footer() -> rx.Component:
         rx.el.div(
             rx.el.div(
                 rx.el.p(
-                    f"© 2024 Law Office of Alexander S. Chang.",
-                    class_name="text-sm text-gray-500",
+                    f"© 2025 Sollex Legal, L3C", class_name="text-sm text-gray-500"
                 ),
                 rx.el.div(
                     rx.el.a(

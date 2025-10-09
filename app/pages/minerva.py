@@ -21,7 +21,7 @@ def terms_of_service() -> rx.Component:
     return rx.el.div(
         rx.el.div(
             rx.el.h2(
-                "Terms of Service",
+                "Utah Caselaw Access Project (Terms of Service)",
                 class_name="font-['DM Sans'] text-2xl font-bold text-center",
             ),
             rx.el.p(
@@ -32,35 +32,35 @@ def terms_of_service() -> rx.Component:
                 tos_section(
                     "General Information",
                     rx.el.p(
-                        "This website and its synthetic intelligence assistant, the Machine Intelligence Network-Enhanced Research Validation Assistant ('Minerva'), are operated by Sollex Legal, L3C ('Company'). Minerva is designed to provide basic legal information regarding Utah laws."
+                        "This website and its synthetic intelligence assistant, the Utah Caselaw Access Project (‘UCAP’), are operated by Sollex Legal, L3C d/b/a 'The Law Office of Alexander S. Chang' (‘Company’). UCAP is designed to provide basic legal information regarding Utah laws."
                     ),
                     rx.el.p(
                         rx.el.strong(
-                            "MINERVA IS NOT A LAWYER.", class_name="text-red-600"
+                            "UCAP IS NOT A LAWYER.", class_name="text-red-600"
                         ),
                         " The information provided is for informational purposes only, does not constitute legal advice, and should not be relied upon as such. ",
                         rx.el.strong(
                             "No attorney-client relationship is formed by using this service."
                         ),
-                        " The Company does not guarantee the accuracy, completeness, or usefulness of any information provided by Minerva.",
+                        " The Company does not guarantee the accuracy, completeness, or usefulness of any information provided by UCAP.",
                     ),
                 ),
                 tos_section(
                     "User Agreement",
                     rx.el.p(
-                        "By accessing or using Minerva, you agree to be bound by these Terms of Service ('Terms'). You represent that you are at least 18 years of age and a resident of the State of Utah. These Terms may be modified at any time."
+                        "By accessing or using UCAP, you agree to be bound by these Terms of Service ('Terms'). You represent that you are at least 18 years of age and a resident of the State of Utah. These Terms may be modified at any time."
                     ),
                 ),
                 tos_section(
                     "Lawful Purpose & Intellectual Property",
                     rx.el.p(
-                        "You agree to use Minerva only for lawful purposes. Prohibited behavior includes harassment, transmitting offensive content, or disrupting dialogue. Minerva and its underlying technology are the exclusive intellectual property of the Company. You agree not to decompile, disassemble, or reverse engineer any part of Minerva."
+                        "You agree to use UCAP only for lawful purposes. Prohibited behavior includes harassment, transmitting offensive content, or disrupting dialogue. UCAP and its underlying technology are the exclusive intellectual property of the Company. You agree not to decompile, disassemble, or reverse engineer any part of UCAP."
                     ),
                 ),
                 tos_section(
                     "Disclaimers, Warranties & Privacy",
                     rx.el.p(
-                        "Minerva's responses are provided 'as is'. The Company gives no warranty of any kind and shall not be responsible for any damages resulting from your use of Minerva. Information you provide, including your IP address and personal details, may be collected and disclosed if legally required. While we implement security measures, we cannot guarantee absolute security of your information."
+                        "UCAP's responses are provided 'as is'. The Company gives no warranty of any kind and shall not be responsible for any damages resulting from your use of UCAP. Information you provide, including your IP address and personal details, may be collected and disclosed if legally required. While we implement security measures, we cannot guarantee absolute security of your information."
                     ),
                 ),
                 class_name="p-4 bg-gray-50 rounded-md border text-justify max-h-96 overflow-y-auto",
