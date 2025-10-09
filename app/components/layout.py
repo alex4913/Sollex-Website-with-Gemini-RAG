@@ -31,7 +31,7 @@ def navbar() -> rx.Component:
         rx.el.div(
             rx.el.a(
                 rx.image(
-                    src="placeholder.svg",
+                    src="/Law Practice Logo.png",
                     alt="Sollex Legal Logo",
                     class_name="h-10 w-auto",
                 ),

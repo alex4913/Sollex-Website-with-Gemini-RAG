@@ -69,7 +69,7 @@ def profile() -> rx.Component:
         rx.el.div(
             rx.el.div(
                 rx.image(
-                    src="placeholder.svg",
+                    src="/SJQ Photo (Nov 2021).jpg",
                     alt="Alexander S. Chang Headshot",
                     class_name="w-full h-full object-cover",
                 ),
