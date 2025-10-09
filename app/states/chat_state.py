@@ -85,15 +85,9 @@ class ChatState(rx.State):
     @rx.event
     def handle_tos_scroll(self):
         """Checks if the user has scrolled to the bottom of the TOS."""
-        return rx.call_script("""
-            const el = document.getElementById('tos-scroll-area');
-            if (el && !this.scrolled_to_bottom) {
-                const isAtBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 20;
-                if (isAtBottom) {
-                    _reflex_event_handler_2255474348_setScrolledToBottom_5d800045e0()
-                }
-            }
-            """)
+        return rx.call_script(
+            f"\n            const el = document.getElementById('tos-scroll-area');\n            if (el && !{self.scrolled_to_bottom}) {{\n                const isAtBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 20;\n                if (isAtBottom) {{\n                    {ChatState.set_scrolled_to_bottom.get_event_handler_code()}\n                }}\n            }}\n            "
+        )
 
     async def _create_embeddings(self):
         """Helper to pre-compute embeddings for the legal documents."""
