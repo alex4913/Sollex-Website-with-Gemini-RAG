@@ -79,15 +79,16 @@ def contact() -> rx.Component:
                             class_name="font-['DM Sans'] text-xl font-bold mb-2",
                         ),
                         rx.el.p(
-                            "Law Office of Alexander S. Chang",
-                            class_name="font-semibold",
+                            "Law Office of Alexander S. Chang", class_name="font-bold"
+                        ),
+                        rx.el.p("1393 E. Arlington Dr.", class_name="font-medium"),
+                        rx.el.p(
+                            "Salt Lake City, UT 84103-4423", class_name="font-medium"
                         ),
                         rx.el.p(
-                            "Address available upon consultation.",
-                            class_name="font-medium",
+                            "Office: (385) ___-____", class_name="font-medium mt-2"
                         ),
-                        rx.el.p("Salt Lake City, UT", class_name="font-medium"),
-                        rx.el.p("Phone: (123) 456-7890", class_name="font-medium mt-2"),
+                        rx.el.p("alexander@utahlaw.ai", class_name="font-medium mt-2"),
                         class_name="space-y-0 text-left",
                     ),
                     class_name="grid md:grid-cols-2 gap-8 w-full max-w-4xl",
