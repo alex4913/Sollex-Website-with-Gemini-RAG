@@ -28,7 +28,7 @@ def index() -> rx.Component:
             ),
             rx.el.a(
                 rx.el.button(
-                    "Access Utah's Open-Source Legal Database",
+                    "Open the Utah Caselaw Access Project",
                     rx.icon("arrow-right", class_name="ml-2"),
                     class_name=f"bg-[{accent_color}] text-[{text_color}] font-bold py-3 px-8 hover:opacity-90 transition-opacity inline-flex items-center",
                 ),
