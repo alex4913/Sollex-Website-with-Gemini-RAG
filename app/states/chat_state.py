@@ -89,8 +89,14 @@ class ChatState(rx.State):
             const el = document.getElementById('tos-scroll-area');
             if (el) {
                 const isAtBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 20;
-                if (isAtBottom) {
-                    __reflex_process_event({name: "chat_state.set_scrolled_to_bottom"});
+                if (isAtBottom && !el.dataset.scrolled) {
+                    el.dataset.scrolled = "true";
+                    window.dispatchEvent(new CustomEvent('reflex-event', {
+                        detail: {
+                            handler: "chat_state.set_scrolled_to_bottom",
+                            args: []
+                        }
+                    }));
                 }
             }
             """)
