@@ -148,7 +148,7 @@ def modest_means() -> rx.Component:
                         class_name="mb-4 text-gray-700",
                     ),
                     rx.el.p(
-                        "The Access to Justice Section will review your application. If you qualify, they will provide a referral to a participating attorney. You can then schedule a consultation with our firm.",
+                        "The Utah State Bar's Access to Justice Section will review your application. If you qualify, they will provide a referral to a participating attorney. You can then schedule a consultation with our firm.",
                         class_name="mb-6 text-gray-700",
                     ),
                     rx.el.a(
