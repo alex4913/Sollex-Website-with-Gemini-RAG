@@ -117,7 +117,7 @@ def modest_means() -> rx.Component:
                 rx.el.div(
                     rx.el.div(
                         rx.el.p(
-                            "Based on Federal Poverty Guidelines (FPG) for a family of 3 (current estimates):",
+                            "Federal Poverty Guidelines (FPG) in year 2025 for a family of 3 is estimated as follows:",
                             class_name="font-semibold text-gray-700 text-center text-sm",
                         ),
                         rx.el.div(
@@ -142,17 +142,23 @@ def modest_means() -> rx.Component:
                     "How to Qualify",
                     class_name="font-['DM Sans'] text-3xl font-bold text-center mt-16 mb-8",
                 ),
-                rx.el.ol(
-                    rx.el.li(
-                        "Schedule an initial consultation through our contact page."
+                rx.el.div(
+                    rx.el.p(
+                        "This firm is a proud participant in the Utah State Bar's Modest Means Program. To determine your eligibility, you must submit an application directly to the Utah State Bar through their website.",
+                        class_name="mb-4 text-gray-700",
                     ),
-                    rx.el.li(
-                        "Provide income verification documents (e.g., recent pay stubs, tax returns)."
+                    rx.el.p(
+                        "The Access to Justice Section will review your application. If you qualify, they will provide a referral to a participating attorney. You can then schedule a consultation with our firm.",
+                        class_name="mb-6 text-gray-700",
                     ),
-                    rx.el.li(
-                        "We will confirm your eligibility tier and provide a clear fee agreement before any work begins."
+                    rx.el.a(
+                        "Apply via the Utah State Bar",
+                        href="https://www.utahbar.org/accesstojustice/modest-means/",
+                        class_name=f"bg-[{accent_color}] text-['#1A1A1A'] font-bold py-3 px-6 hover:opacity-90 transition-opacity inline-flex items-center",
+                        target="_blank",
+                        rel="noopener noreferrer",
                     ),
-                    class_name="list-decimal list-inside space-y-2 max-w-2xl mx-auto text-gray-700 bg-white/50 p-6 border rounded-lg",
+                    class_name="max-w-2xl mx-auto text-center bg-white/50 p-8 border rounded-lg",
                     border_color=border_color,
                 ),
             ),
