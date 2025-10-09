@@ -79,50 +79,68 @@ def modest_means() -> rx.Component:
             rx.el.div(
                 rx.el.h2(
                     "Tiered Fee Structure",
-                    class_name="font-['DM Sans'] text-3xl font-bold text-center mt-12 mb-12",
+                    class_name="font-['DM Sans'] text-3xl font-bold text-center mt-16 mb-10",
                 ),
                 rx.el.div(
                     tier_card(
                         "1",
-                        "Income: 125% - 300% FPG",
+                        "Income: 125% - 200% FPG",
                         [
                             "Lowest flat-fee services.",
                             "Significantly reduced hourly rate.",
                             "Ideal for those with the most need.",
                         ],
-                        "gem",
+                        "star",
                     ),
                     tier_card(
                         "2",
-                        "Income: 300% - 500% FPG",
+                        "Income: 200% - 300% FPG",
                         [
-                            "Competitive flat-fee packages.",
-                            "Moderately reduced hourly rate.",
-                            "For predictable middle-income costs.",
+                            "Reduced flat-fee packages.",
+                            "Reduced hourly rate.",
+                            "For lower-to-middle income individuals.",
                         ],
                         "coins",
                     ),
                     tier_card(
                         "3",
-                        "Income: > 500% FPG",
+                        "Income: 300% - 400% FPG",
                         [
-                            "Standard competitive rates.",
-                            "Supports our community mission.",
-                            "Fees help subsidize Levels 1 & 2.",
+                            "Competitive flat-fee packages.",
+                            "Moderately reduced hourly rate.",
+                            "For predictable middle-income costs.",
                         ],
                         "landmark",
                     ),
-                    class_name="grid md:grid-cols-3 gap-12 mt-8",
+                    class_name="grid md:grid-cols-3 gap-8",
+                ),
+                rx.el.div(
+                    rx.el.div(
+                        rx.el.p(
+                            "Based on Federal Poverty Guidelines (FPG) for a family of 3 (current estimates):",
+                            class_name="font-semibold text-gray-700 text-center text-sm",
+                        ),
+                        rx.el.div(
+                            rx.el.p("125% ≈ $34,645/year"),
+                            rx.el.p("200% ≈ $53,300/year"),
+                            rx.el.p("300% ≈ $79,950/year"),
+                            rx.el.p("400% ≈ $106,600/year"),
+                            class_name="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-1 text-center text-xs text-gray-600",
+                        ),
+                        class_name="space-y-2",
+                    ),
+                    class_name="max-w-2xl mx-auto mt-6 text-center bg-white/50 p-4 border rounded-lg",
+                    border_color=border_color,
                 ),
                 rx.el.p(
-                    "FPG: Federal Poverty Guidelines.",
-                    class_name="text-center text-sm text-gray-500 mt-4",
+                    "Clients with income above 400% FPG do not qualify for the Modest Means Program but may be accepted at standard firm rates.",
+                    class_name="text-center text-sm text-gray-600 mt-4",
                 ),
             ),
             rx.el.div(
                 rx.el.h2(
                     "How to Qualify",
-                    class_name="font-['DM Sans'] text-3xl font-bold text-center mt-20 mb-8",
+                    class_name="font-['DM Sans'] text-3xl font-bold text-center mt-16 mb-8",
                 ),
                 rx.el.ol(
                     rx.el.li(
