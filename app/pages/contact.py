@@ -49,7 +49,7 @@ def calendly_widget() -> rx.Component:
     return rx.el.div(
         id="calendly-widget",
         on_mount=CalendlyState.init_calendly,
-        class_name="min-w-[320px] h-[600px] w-full",
+        class_name="min-w-[320px] h-[700px] w-full",
     )
 
 
