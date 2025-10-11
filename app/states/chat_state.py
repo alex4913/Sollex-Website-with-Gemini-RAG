@@ -24,11 +24,11 @@ class ChatState(rx.State):
 
     messages: list[Message] = [
         {
-            "text": "The information provided by UCAP is for general legal information only and does not constitute legal advice. Do not submit or send any confidential or personal information. No attorney-client relationship is created by using UCAP.",
+            "text": "The UCAP information provided by Minerva is for general legal information only and does not constitute legal advice. Do not submit or send any confidential or personal information. No attorney-client relationship is created by using UCAP.",
             "is_user": False,
         },
         {
-            "text": "I am Minerva, the AI assistant for the Law Office of Alexander S. Chang. How may I help you answer your preliminary questions?",
+            "text": "I am Minerva, the general AI for the Law Office of Alexander S. Chang. I can help you search the legal research database, UCAP. What is your question?",
             "is_user": False,
         },
     ]
@@ -142,7 +142,7 @@ class ChatState(rx.State):
             context = """
 
 """.join([doc.page_content for doc in relevant_docs])
-            model = genai.GenerativeModel("gemini-1.5-flash")
+            model = genai.GenerativeModel("gemini-2.5-flash")
             prompt = f"You are a professional, helpful AI legal assistant designed to convey the context retrieved below to the user. Answer the user's question based on the following context. Whenever possible, respond to the user with the verbatim of the context, including the context’s citations to the law. For citations, use markdown to *italicize* case names. If the context does not contain the answer, state that you do not have enough information but can schedule a consultation. Do not mention that you are using 'context'.\n\nContext:\n{context}\n\nQuestion:\n{question}\n\nAnswer:"
             stream = await model.generate_content_async(prompt, stream=True)
             current_text = ""
