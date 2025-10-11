@@ -111,36 +111,51 @@ class ChatState(rx.State):
             self.is_cycling_prompts = True
             return ChatState.cycle_prompts
 
-    @rx.event
+    @rx.event(background=True)
     async def process_question(self, form_data: dict):
         """Processes the user's question, runs RAG, and gets a response."""
         question = form_data.get("question", "").strip()
-        if not question or self.is_typing:
+        if not question:
             return
-        self.is_typing = True
-        self.messages.append({"text": question, "is_user": True})
-        self.messages.append({"text": "", "is_user": False})
-        self.question_input = ""
-        yield
+        async with self:
+            if self.is_typing:
+                return
+            self.is_typing = True
+            self.messages.append({"text": question, "is_user": True})
+            self.messages.append({"text": "", "is_user": False})
+            self.question_input = ""
         try:
             self._initialize_rag()
             if not self._retriever:
-                raise ValueError("Retriever not initialized.")
-            relevant_docs = self._retriever.get_relevant_documents(question)
+                logging.error("Retriever not initialized.")
+                async with self:
+                    self.messages[-1]["text"] = (
+                        "Error: The document retrieval system is not available."
+                    )
+                    self.is_typing = False
+                return
+            relevant_docs = await asyncio.to_thread(
+                self._retriever.get_relevant_documents, question
+            )
             context = """
+
 """.join([doc.page_content for doc in relevant_docs])
-            model = genai.GenerativeModel("gemini-2.5-pro")
+            model = genai.GenerativeModel("gemini-1.5-pro")
             prompt = f"You are a professional, helpful AI assistant for a solo practice law firm. Your tone should be trustworthy and modern. Answer the user's question based on the following context. If the context does not contain the answer, state that you do not have enough information but can schedule a consultation. Do not mention that you are using 'context'.\n\nContext:\n{context}\n\nQuestion:\n{question}\n\nAnswer:"
             stream = await model.generate_content_async(prompt, stream=True)
             current_text = ""
             async for chunk in stream:
                 if chunk.text:
                     current_text += chunk.text
-                    self.messages[-1]["text"] = current_text
-                    yield
+                    async with self:
+                        self.messages[-1]["text"] = current_text
         except Exception as e:
-            logging.exception(f"An error occurred: {e}")
-            self.messages[-1]["text"] = f"An error occurred: {e}"
+            logging.exception(f"An error occurred during question processing: {e}")
+            error_message = f"An error occurred: {e}"
+            if "quota" in str(e).lower():
+                error_message = "I'm sorry, I am currently unable to answer questions due to high demand. Please try again later."
+            async with self:
+                self.messages[-1]["text"] = error_message
         finally:
-            self.is_typing = False
-            yield
+            async with self:
+                self.is_typing = False
