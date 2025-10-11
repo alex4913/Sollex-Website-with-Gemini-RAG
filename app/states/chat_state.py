@@ -4,8 +4,10 @@ import google.generativeai as genai
 import logging
 from typing import TypedDict
 import asyncio
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_community.vectorstores import Chroma
+from langchain_core.retrievers import BaseRetriever
 
-vector_store: dict[str, list[float]] = {}
 try:
     genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
 except Exception as e:
@@ -40,15 +42,8 @@ class ChatState(rx.State):
     current_prompt_index: int = 0
     question_input: str = ""
     is_cycling_prompts: bool = False
-    legal_docs: list[str] = [
-        "The Law Office of Alexander S. Chang is a modern, AI-powered law firm.",
-        "The firm was founded by Alexander S. Chang, an expert in generative artificial intelligence and its use in law.",
-        "We offer a 'Modest Means Program' to provide affordable legal services to lower and middle-income individuals.",
-        "Our Modest Means Program uses a tiered fee structure based on the Federal Poverty Guidelines, in collaboration with the Utah State Bar's Access to Justice section.",
-        "Tier 1 serves clients with incomes between 125% and 300% of the Federal Poverty limit with flat fees and reduced hourly rates.",
-        "Tier 2 serves clients with incomes between 300% and 500% of the Federal Poverty limit with competitive flat fees.",
-        "Alexander S. Chang has published articles in the Utah Bar Journal on AI in legal practice and on asset protection trusts.",
-    ]
+    _vector_store: Chroma | None = None
+    _retriever: BaseRetriever | None = None
 
     @rx.var
     def current_prompt_text(self) -> str:
@@ -76,19 +71,27 @@ class ChatState(rx.State):
         """Sets the terms of service as accepted."""
         self.tos_accepted = True
 
-    async def _create_embeddings(self):
-        """Helper to pre-compute embeddings for the legal documents."""
-        if not vector_store and self.legal_docs:
-            print("Creating embeddings for documents...")
-            try:
-                response = await genai.embed_content_async(
-                    model="models/text-embedding-004", content=self.legal_docs
-                )
-                for i, embedding in enumerate(response["embedding"]):
-                    vector_store[self.legal_docs[i]] = embedding
-                print("Embeddings created successfully.")
-            except Exception as e:
-                logging.exception(f"Error creating embeddings: {e}")
+    def _initialize_rag(self):
+        """Initializes the RAG components (vector store and retriever)."""
+        if self._retriever:
+            return
+        try:
+            logging.info("Initializing RAG components...")
+            embeddings = GoogleGenerativeAIEmbeddings(
+                model="models/embedding-001",
+                google_api_key=os.environ["GOOGLE_API_KEY"],
+            )
+            self._vector_store = Chroma(
+                collection_name="ultima-collection",
+                persist_directory="chromadata",
+                embedding_function=embeddings,
+            )
+            self._retriever = self._vector_store.as_retriever(
+                search_type="similarity", search_kwargs={"k": 2}
+            )
+            logging.info("RAG components initialized successfully.")
+        except Exception as e:
+            logging.exception(f"Error initializing RAG components: {e}")
 
     @rx.event(background=True)
     async def cycle_prompts(self):
@@ -103,25 +106,10 @@ class ChatState(rx.State):
     @rx.event
     async def minerva_page_load(self):
         """Event handler for when the Minerva page loads."""
-        await self._create_embeddings()
+        self._initialize_rag()
         if not self.is_cycling_prompts:
             self.is_cycling_prompts = True
             return ChatState.cycle_prompts
-
-    def _find_relevant_docs(self, query_embedding: list[float], top_k=2) -> list[str]:
-        """Finds the most relevant documents from the vector store."""
-        if not vector_store:
-            return []
-        import numpy as np
-
-        similarities = []
-        for doc, doc_embedding in vector_store.items():
-            similarity = np.dot(query_embedding, doc_embedding) / (
-                np.linalg.norm(query_embedding) * np.linalg.norm(doc_embedding)
-            )
-            similarities.append((similarity, doc))
-        similarities.sort(key=lambda x: x[0], reverse=True)
-        return [doc for _, doc in similarities[:top_k]]
 
     @rx.event
     async def process_question(self, form_data: dict):
@@ -135,13 +123,13 @@ class ChatState(rx.State):
         self.question_input = ""
         yield
         try:
-            query_embedding_response = await genai.embed_content_async(
-                model="models/text-embedding-004", content=question
-            )
-            query_embedding = query_embedding_response["embedding"]
-            relevant_docs = self._find_relevant_docs(query_embedding)
-            context = "".join(relevant_docs)
-            model = genai.GenerativeModel("models/gemini-1.5-flash-latest")
+            self._initialize_rag()
+            if not self._retriever:
+                raise ValueError("Retriever not initialized.")
+            relevant_docs = self._retriever.get_relevant_documents(question)
+            context = """
+""".join([doc.page_content for doc in relevant_docs])
+            model = genai.GenerativeModel("gemini-2.5-pro")
             prompt = f"You are a professional, helpful AI assistant for a solo practice law firm. Your tone should be trustworthy and modern. Answer the user's question based on the following context. If the context does not contain the answer, state that you do not have enough information but can schedule a consultation. Do not mention that you are using 'context'.\n\nContext:\n{context}\n\nQuestion:\n{question}\n\nAnswer:"
             stream = await model.generate_content_async(prompt, stream=True)
             current_text = ""

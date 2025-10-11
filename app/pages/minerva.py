@@ -32,11 +32,12 @@ def terms_of_service() -> rx.Component:
                 tos_section(
                     "General Information",
                     rx.el.p(
-                        "This website and its synthetic intelligence assistant, the Utah Caselaw Access Project (UCAP), are operated by Sollex Legal, L3C d/b/a The Law Office of Alexander S. Chang (Company). UCAP is designed to provide basic legal information regarding Utah laws."
+                        "The Utah Caselaw Access Project (UCAP) and this website’s synthetic intelligence assistant are operated by Sollex Legal, L3C d/b/a The Law Office of Alexander S. Chang (Company). UCAP is designed to provide basic legal information regarding Utah laws."
                     ),
                     rx.el.p(
                         rx.el.strong(
-                            "UCAP IS NOT A LAWYER.", class_name="text-red-600"
+                            "UCAP IS NOT A SUBSTITUTE FOR LEGAL ADVICE. DO NOT INPUT PRIVATE OR CONFIDENTIAL INFORMATION.",
+                            class_name="text-red-600",
                         ),
                         " The information provided is for informational purposes only, does not constitute legal advice, and should not be relied upon as such. ",
                         rx.el.strong(

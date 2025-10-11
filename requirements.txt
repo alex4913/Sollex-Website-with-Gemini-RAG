@@ -5,3 +5,5 @@ langchain-google-genai
 langchain-community
 google-generativeai
 numpy
+chromadb
+langchain-chroma
