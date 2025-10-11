@@ -1,5 +1,4 @@
 import reflex as rx
-from app.components.layout import layout
 from app.pages.index import index
 from app.pages.profile import profile
 from app.pages.contact import contact
@@ -8,6 +7,7 @@ from app.pages.disclaimer import disclaimer
 from app.pages.privacy_policy import privacy_policy
 from app.pages.minerva import minerva
 from app.states.chat_state import ChatState
+from app.components.layout import layout
 
 app = rx.App(
     theme=rx.theme(appearance="light"),
