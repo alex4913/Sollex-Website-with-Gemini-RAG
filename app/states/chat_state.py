@@ -140,7 +140,7 @@ class ChatState(rx.State):
             context = """
 
 """.join([doc.page_content for doc in relevant_docs])
-            model = genai.GenerativeModel("gemini-1.5-flash-latest")
+            model = genai.GenerativeModel("gemini-pro")
             prompt = f"You are a professional, helpful AI assistant for a solo practice law firm. Your tone should be trustworthy and modern. Answer the user's question based on the following context. If the context does not contain the answer, state that you do not have enough information but can schedule a consultation. Do not mention that you are using 'context'.\n\nContext:\n{context}\n\nQuestion:\n{question}\n\nAnswer:"
             stream = await model.generate_content_async(prompt, stream=True)
             current_text = ""
