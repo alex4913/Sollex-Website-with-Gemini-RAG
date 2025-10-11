@@ -143,7 +143,7 @@ class ChatState(rx.State):
 
 """.join([doc.page_content for doc in relevant_docs])
             model = genai.GenerativeModel("gemini-2.5-flash")
-            prompt = f"You are a professional, helpful AI legal assistant designed to convey the context retrieved below to the user. Answer the user's question based on the following context. Whenever possible, respond to the user with the verbatim of the context, including the context’s citations to the law. For citations, use markdown to *italicize* case names. If the context does not contain the answer, state that you do not have enough information but can schedule a consultation. Do not mention that you are using 'context'.\n\nContext:\n{context}\n\nQuestion:\n{question}\n\nAnswer:"
+            prompt = f"You are a professional, helpful AI legal assistant designed to convey the information retrieved from the 'database' below to the user. Answer the user's question based on the following database information. Whenever possible, respond to the user with the verbatim of the database, including the database's citations to the law. For citations, use markdown to *italicize* case names. If the database information does not contain the answer, state that you do not have enough information but can schedule a consultation.\n\nDatabase:\n{context}\n\nQuestion:\n{question}\n\nAnswer:"
             stream = await model.generate_content_async(prompt, stream=True)
             current_text = ""
             async for chunk in stream:
