@@ -2,7 +2,7 @@ import reflex as rx
 import os
 import google.generativeai as genai
 import logging
-from typing import TypedDict
+from typing import TypedDict, Any
 import asyncio
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import Chroma
@@ -77,9 +77,12 @@ class ChatState(rx.State):
             return
         try:
             logging.info("Initializing RAG components...")
+            api_key = os.environ.get("GOOGLE_API_KEY")
+            if not api_key:
+                logging.error("GOOGLE_API_KEY environment variable not set.")
+                return
             embeddings = GoogleGenerativeAIEmbeddings(
-                model="models/embedding-001",
-                google_api_key=os.environ["GOOGLE_API_KEY"],
+                model="models/embedding-001", google_api_key=api_key
             )
             self._vector_store = Chroma(
                 collection_name="ultima-collection",
@@ -123,7 +126,6 @@ class ChatState(rx.State):
             self.is_typing = True
             self.messages.append({"text": question, "is_user": True})
             self.messages.append({"text": "", "is_user": False})
-            self.question_input = ""
         try:
             self._initialize_rag()
             if not self._retriever:
@@ -140,8 +142,8 @@ class ChatState(rx.State):
             context = """
 
 """.join([doc.page_content for doc in relevant_docs])
-            model = genai.GenerativeModel("gemini-1.5-pro-latest")
-            prompt = f"You are a professional, helpful AI assistant for a solo practice law firm. Your tone should be trustworthy and modern. Answer the user's question based on the following context. If the context does not contain the answer, state that you do not have enough information but can schedule a consultation. Do not mention that you are using 'context'.\n\nContext:\n{context}\n\nQuestion:\n{question}\n\nAnswer:"
+            model = genai.GenerativeModel("gemini-1.5-flash")
+            prompt = f"You are a professional, helpful AI legal assistant designed to convey the context retrieved below to the user. Answer the user's question based on the following context. Whenever possible, respond to the user with the verbatim of the context, including the context’s citations to the law. For citations, use markdown to *italicize* case names. If the context does not contain the answer, state that you do not have enough information but can schedule a consultation. Do not mention that you are using 'context'.\n\nContext:\n{context}\n\nQuestion:\n{question}\n\nAnswer:"
             stream = await model.generate_content_async(prompt, stream=True)
             current_text = ""
             async for chunk in stream:

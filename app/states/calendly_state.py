@@ -13,7 +13,7 @@ class CalendlyState(rx.State):
                 // Clear the element before initializing to prevent duplicates
                 if (el) {
                     el.innerHTML = '';
-Calendly.initInlineWidget({
+                    Calendly.initInlineWidget({
                         url: 'https://calendly.com/alex-law-office/30-minute-consultation',
                         parentElement: el,
                     });
